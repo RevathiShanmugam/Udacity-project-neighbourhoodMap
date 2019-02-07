@@ -36,7 +36,8 @@ class App extends Component {
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(response=>{this.setState({
       venues: response.data.response.groups[0].items},
-      /*Moving the render map Callback function here*/
+      /*Moving the render map Callback function here
+      (After venues array gets its data from foursquare API)*/
       this.renderMap())
     }).catch(error=>{
       console.log("Error while fetching data from Foursquare. "+ error);
@@ -48,10 +49,17 @@ class App extends Component {
      center: {lat: 37.7648, lng: -122.463},
      zoom: 12.5
    })
+
+   var infowindow = new window.google.maps.InfoWindow({
+    maxWidth: 180
+    })
+  
+    this.infowindow= infowindow
+
    /*looping through venues array*/
    this.state.venues.map(myVenue=>{
     var contentString = `<b>${myVenue.venue.name}</b>
-    <br> ${myVenue.venue.location.formattedAddress}`
+    <br> ${myVenue.venue.location.formattedAddress}<br>`
   
     var marker = new window.google.maps.Marker({
       position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
@@ -59,6 +67,11 @@ class App extends Component {
       animation: window.google.maps.Animation.DROP,
       title: myVenue.venue.name
     })
+    marker.addListener('click', function() {
+      /*Update content using setContent*/
+      infowindow.setContent(contentString);
+      infowindow.open(map, marker);
+  })
   })
   }
   
