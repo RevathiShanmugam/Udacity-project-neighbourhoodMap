@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import Sidebar from './Sidebar';
-import Map from './Map';
 import Header from './Header';
 import './App.css';
 import axios from 'axios';
 
 class App extends Component {
-  state={
-    /*We can view the state date @dev tools=>React=>state*/
-    venues: []
-  }
+  constructor(props) {
+    super(props)
+      this.state={
+        /*We can view the state date @dev tools=>React=>state*/
+        venues: [],
+        markers: []
+      }
+    }
+  
   componentDidMount(){ 
     this.getVenues();
   /* The map is loaded first and the Venues are not displayed because getVenue takes more time to execute  this.renderMap();*/
@@ -73,13 +77,15 @@ class App extends Component {
       infowindow.open(map, marker);
   })
   })
-  }
-  
+}
   render() {
     return (
       <main>
         <Header/>
-        <Map/>
+        <div id="container" aria-label="Menu Container">
+          <Sidebar venues={ this.state.venues } markers={ this.state.markers}/>
+        </div>
+        <div id="map"></div>
       </main>
         )
   }
