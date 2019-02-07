@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import Sidebar from './Sidebar';
 import Header from './Header';
+import SearchBar from './Searchbar';
+import Sidebar from './Sidebar';
 import './App.css';
 import axios from 'axios';
+import escapeRegExp from 'escape-string-regexp';
 
 class App extends Component {
   constructor(props) {
@@ -10,7 +12,10 @@ class App extends Component {
       this.state={
         /*We can view the state date @dev tools=>React=>state*/
         venues: [],
-        markers: []
+        markers: [],
+        showVenues: [],
+        query: '',
+        notVisibleMarkers: []
       }
     }
   
@@ -77,11 +82,48 @@ class App extends Component {
       infowindow.open(map, marker);
   })
   })
+  }
+  /* Update query based on the user input in search box.*/
+  updateQuery = query => {
+    this.setState({ query })
+    this.state.markers.map(marker => marker.setVisible(true))
+    let filterVenues
+    let notVisibleMarkers
+
+    if (query) {
+      const match = new RegExp(escapeRegExp(query), "i")
+      filterVenues = this.state.venues.filter(myVenue =>
+        match.test(myVenue.venue.name))
+      this.setState({ venues: filterVenues })
+      notVisibleMarkers = this.state.markers.filter(marker =>
+        filterVenues.every(myVenue => myVenue.venue.name !== marker.title)
+    )
+    /*Hiding the markers for venues not having the letters typed in search box. */
+    notVisibleMarkers.forEach(marker => marker.setVisible(false))
+    this.setState({ notVisibleMarkers })
+    } else{
+    this.setState({ venues: this.state.showVenues })
+    this.state.markers.forEach(marker => marker.setVisible(true))
+  }
 }
+
   render() {
     return (
       <main>
+        <div id="header">
         <Header/>
+        </div>
+        <div id="SearchBar" aria-label="Search Bar">
+          <SearchBar
+            venues={ this.state.showVenues }
+            markers={ this.state.markers }
+            filteredVenues={ this.filteredVenues }
+  	      	query={this.state.query}
+            clearQuery={this.state.showVenues}
+	        	updateQuery={b => this.updateQuery(b)}
+	        	clickLocation={this.clickLocation}
+          />
+        </div>
         <div id="container" aria-label="Menu Container">
           <Sidebar venues={ this.state.venues } markers={ this.state.markers}/>
         </div>
