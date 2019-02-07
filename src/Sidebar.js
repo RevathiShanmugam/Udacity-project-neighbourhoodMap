@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-class ListComponent extends Component {
+class Sidebar extends Component {
   render() {
     return (
       <div>
@@ -10,4 +10,4 @@ class ListComponent extends Component {
   }
 }
 
-export default ListComponent;
+export default Sidebar;
