@@ -6,6 +6,9 @@ import './App.css';
 import axios from 'axios';
 
 class App extends Component {
+  state={
+    venues=[]
+  }
   componentDidMount(){ 
     this.getVenues();
     this.renderMap();
@@ -30,12 +33,13 @@ class App extends Component {
   /*Persorming GET request on Foursquare API using axios*/
   /*Response from API is logged in console(conole=>user message=> data)*/
     axios.get(endPoint + new URLSearchParams(parameters))
-    .then(response=>{
-      console.log(response)
+    .then(response=>{this.setState({
+      venues: response.data.response.groups[0].items
+    })
     }).catch(error=>{
       console.log("Error while fetching data from Foursquare. "+ error);
     })
-}
+  }
 
   initMap=()=> {
     var map = new window.google.maps.Map(document.getElementById('map'), {
