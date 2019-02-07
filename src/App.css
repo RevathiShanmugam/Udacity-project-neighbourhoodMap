@@ -9,3 +9,88 @@ vh-viewport height*/
       margin: 0;
       padding: 0;
     }
+/* ====================== Header ====================== */
+     header {
+      display: flex;
+      width: 100%;
+      height: 80px;
+      background-color: #252831;
+      text-align:center;
+    }
+    header h1 {
+      margin: auto;
+    }
+    header h1 a {
+      color: #fff;
+      font-size: calc(0.45em + 2vmin);
+      font-weight: 100;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+/* ====================== Sidebar React burger menu ====================== */
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 2vh;
+  margin-right: 5px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+    background: #373a47;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+  padding: 15px;
+  margin-right: 10px;
+  margin-bottom: 2px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #bdc3c7;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background-color: rgb(0,0,0);
+  font-size: 1.1em;
+  color:White;
+  list-style-type: none;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  margin: auto;
+  text-align: left;
+}
+
+@media screen and (max-width: 480px) {
+  .bm-item-list {
+    padding:0px;
+  }
+  .bm-menu {
+    margin-top: 10px;
+    font-size: 0.8em;
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+
+/* Individual item */
+.bm-item {
+  display: inline-block;
+}
+
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
