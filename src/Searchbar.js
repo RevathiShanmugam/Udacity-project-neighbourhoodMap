@@ -15,8 +15,7 @@ class SearchBar extends Component {
           value={this.props.query}
           onChange={event => this.props.updateQuery(event.target.value)}
           />
-          <button className="filterButton" type="filter"
-          onClick={event => this.props.updateQuery(event.target.value)}><i className="fa fa-filter"></i></button>
+          <button className="filterButton" type="filter"><i className="fa fa-filter"></i></button>
         </div>
       );
     }
