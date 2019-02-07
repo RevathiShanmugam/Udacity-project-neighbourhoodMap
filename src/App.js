@@ -7,6 +7,7 @@ import axios from 'axios';
 
 class App extends Component {
   state={
+    /*We can view the state date @dev tools=>React=>state*/
     venues: []
   }
   componentDidMount(){ 
@@ -46,6 +47,13 @@ class App extends Component {
      center: {lat: 37.7648, lng: -122.463},
      zoom: 12.5
    })
+   /*Adding a marker on San Francisco*/
+   var marker = new window.google.maps.Marker({
+    position: {lat: 37.7648, lng: -122.463},
+    map: map,
+    animation: window.google.maps.Animation.DROP,
+    title: 'San francisco'
+  })
   }
   
   render() {
