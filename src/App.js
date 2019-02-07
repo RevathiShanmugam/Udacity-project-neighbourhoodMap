@@ -77,16 +77,11 @@ class App extends Component {
   
   render() {
     return (
-      <div className="app">
-        <div className="list-container">
-          <h2>Neighborhood Map</h2>
-          <Sidebar/>
-        </div>
-        <div className="map-container">
-          <Map/>
-        </div>
-      </div>
-    )
+      <main>
+        <Header/>
+        <Map/>
+      </main>
+        )
   }
 }
 /*The script tag with map API fetch is written as a function*/
