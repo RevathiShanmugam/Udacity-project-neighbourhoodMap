@@ -12,7 +12,7 @@ class App extends Component {
   }
   componentDidMount(){ 
     this.getVenues();
-    this.renderMap();
+  /* The map is loaded first and the Venues are not displayed because getVenue takes more time to execute  this.renderMap();*/
   }
   renderMap=()=>{
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCPchsd2s7wJODl00k9vuPgGZUVo-UmthE&callback=initMap")
@@ -35,8 +35,9 @@ class App extends Component {
   /*Response from API is logged in console(conole=>user message=> data)*/
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(response=>{this.setState({
-      venues: response.data.response.groups[0].items
-    })
+      venues: response.data.response.groups[0].items},
+      /*Moving the render map Callback function here*/
+      this.renderMap())
     }).catch(error=>{
       console.log("Error while fetching data from Foursquare. "+ error);
     })
@@ -47,12 +48,17 @@ class App extends Component {
      center: {lat: 37.7648, lng: -122.463},
      zoom: 12.5
    })
-   /*Adding a marker on San Francisco*/
-   var marker = new window.google.maps.Marker({
-    position: {lat: 37.7648, lng: -122.463},
-    map: map,
-    animation: window.google.maps.Animation.DROP,
-    title: 'San francisco'
+   /*looping through venues array*/
+   this.state.venues.map(myVenue=>{
+    var contentString = `<b>${myVenue.venue.name}</b>
+    <br> ${myVenue.venue.location.formattedAddress}`
+  
+    var marker = new window.google.maps.Marker({
+      position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
+      map: map,
+      animation: window.google.maps.Animation.DROP,
+      title: myVenue.venue.name
+    })
   })
   }
   
